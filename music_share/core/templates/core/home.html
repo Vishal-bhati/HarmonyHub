@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<main class="container hero">
+  <h1>Share the Music. Share the Moment.</h1>
+  <p>Create music sharing rooms, dedicate songs, and vibe together — all powered by Spotify.</p>
+
+  <div class="row justify-content-center mt-5">
+    <!-- Create Room -->
+    <div class="col-md-4 mb-4">
+      <div class="p-4 border rounded shadow-sm bg-dark bg-opacity-25">
+        <h5>Create a Room</h5>
+        <form method="POST" action="{% url 'create_room' %}">
+          {% csrf_token %}
+          <button class="btn btn-glow w-100 mt-3">Create Room</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Join Room -->
+    <div class="col-md-4 mb-4">
+      <div class="p-4 border rounded shadow-sm bg-dark bg-opacity-25">
+        <h5>Join a Room</h5>
+        <form method="POST" action="{% url 'join_room' %}">
+          {% csrf_token %}
+          <input type="text" name="room_code" placeholder="Enter Room Code" class="form-control mb-3" required>
+          <button class="btn btn-outline-light w-100">Join Room</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% if not request.session.spotify_token %}
+  <div class="mt-4">
+    <a href="{% url 'spotify_login' %}" class="btn btn-outline-success">Connect Spotify</a>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}
